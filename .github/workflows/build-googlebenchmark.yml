@@ -1,0 +1,20 @@
+name: build-googlebenchmark
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: build
+        id: build
+        shell: cmd
+        run: call build.bat
