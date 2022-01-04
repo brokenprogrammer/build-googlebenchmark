@@ -69,7 +69,7 @@ if "%GITHUB_WORKFLOW%" neq "" (
     :dateok
     set BUILD_DATE=%LDATE:~0,4%-%LDATE:~4,2%-%LDATE:~6,2%
 
-    %SZIP% a -mx=9 benchmark-%BUILD_DATE%.zip benchmark || exit /b 1
+    %SZIP% a -mx=9 benchmark-%BUILD_DATE%.zip benchmark.src\build\src\Release || exit /b 1
 
     echo ::set-output name=BENCHMARK_COMMIT::%BENCHMARK_COMMIT%
     echo ::set-output name=BUILD_DATE::%BUILD_DATE%
