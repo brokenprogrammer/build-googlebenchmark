@@ -59,11 +59,11 @@ cmake -E chdir "build" cmake -A x64 -G "Visual Studio 17 2022" -DBENCHMARK_DOWNL
 cmake --build "build" --config Release
 popd
 
-copy /y benchmark.src\.git\refs\heads\master benchmark\commit.txt 1>nul 2>nul
+copy /y benchmark.src\.git\refs\heads\master commit.txt 1>nul 2>nul
 
 Rem Done
 if "%GITHUB_WORKFLOW%" neq "" (
-    set /p BENCHMARK_COMMIT=<benchmark\commit.txt
+    set /p BENCHMARK_COMMIT=<commit.txt
 
     for /F "skip=1" %%D in ('WMIC OS GET LocalDateTime') do (set LDATE=%%D & goto :dateok)
     :dateok
