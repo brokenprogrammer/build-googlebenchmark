@@ -89,3 +89,5 @@ if "%GITHUB_WORKFLOW%" neq "" (
 
     echo Done
 )
+
+exit /b 0
