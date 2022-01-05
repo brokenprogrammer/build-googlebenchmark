@@ -42,7 +42,7 @@ where /Q cl.exe || (
 
 rem Downloading source
 
-echo Downloading google benchmark
+echo Downloading benchmark
 if exist benchmark.src (
   pushd benchmark.src
   git pull --force --no-tags --depth 1 || exit /b 1
@@ -59,9 +59,20 @@ cmake -E chdir "build" cmake -A x64 -G "Visual Studio 17 2022" -DBENCHMARK_DOWNL
 cmake --build "build" --config Release
 popd
 
-copy /y benchmark.src\.git\refs\heads\master commit.txt 1>nul 2>nul
 
-Rem Done
+Rem Packaging release
+
+mkdir benchmark
+mkdir benchmark\lib
+mkdir benchmark\include
+
+copy /y benchmark.src\.git\refs\heads\main benchmark\commit.txt            1>nul 2>nul
+
+copy /y benchmark.src\build\src\Release\benchmark.lib      benchmark\lib     1>nul 2>nul
+copy /y benchmark.src\build\src\Release\benchmark_main.lib benchmark\lib     1>nul 2>nul
+
+xcopy /D /S /I /Q /Y benchmark.src\include                 benchmark\include 1>nul 2>nul
+
 if "%GITHUB_WORKFLOW%" neq "" (
     set /p BENCHMARK_COMMIT=<commit.txt
 
@@ -69,7 +80,7 @@ if "%GITHUB_WORKFLOW%" neq "" (
     :dateok
     set BUILD_DATE=%LDATE:~0,4%-%LDATE:~4,2%-%LDATE:~6,2%
 
-    %SZIP% a -mx=9 benchmark-%BUILD_DATE%.zip benchmark.src\build\src\Release || exit /b 1
+    %SZIP% a -mx=9 benchmark-%BUILD_DATE%.zip benchmark || exit /b 1
 
     echo ::set-output name=BENCHMARK_COMMIT::%BENCHMARK_COMMIT%
     echo ::set-output name=BUILD_DATE::%BUILD_DATE%
