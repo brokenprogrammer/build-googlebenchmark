@@ -74,7 +74,7 @@ copy /y benchmark.src\build\src\Release\benchmark_main.lib benchmark\lib     1>n
 xcopy /D /S /I /Q /Y benchmark.src\include                 benchmark\include 1>nul 2>nul
 
 if "%GITHUB_WORKFLOW%" neq "" (
-    set /p BENCHMARK_COMMIT=<commit.txt
+    set /p BENCHMARK_COMMIT=<benchmark\commit.txt
 
     for /F "skip=1" %%D in ('WMIC OS GET LocalDateTime') do (set LDATE=%%D & goto :dateok)
     :dateok
