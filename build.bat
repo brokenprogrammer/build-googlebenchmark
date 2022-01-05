@@ -82,6 +82,10 @@ if "%GITHUB_WORKFLOW%" neq "" (
 
     %SZIP% a -mx=9 benchmark-%BUILD_DATE%.zip benchmark || exit /b 1
 
+    echo Successfully packaged benchmark
+
     echo ::set-output name=BENCHMARK_COMMIT::%BENCHMARK_COMMIT%
     echo ::set-output name=BUILD_DATE::%BUILD_DATE%
+
+    echo Done
 )
